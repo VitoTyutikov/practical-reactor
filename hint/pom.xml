@@ -181,10 +181,4 @@
         </profile>
     </profiles>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>nexus</id>-->
-<!--            <url>https://nexus.sovcombank.group/repository/gradle/gradle/gradle-8.1.1-bin.zip</url>-->
-<!--        </repository>-->
-<!--    </repositories>-->
 </project>

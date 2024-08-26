@@ -1,4 +1,5 @@
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
@@ -7,14 +8,14 @@ import java.time.Duration;
 /**
  * Another way of controlling amount of data flowing is batching.
  * Reactor provides three batching strategies: grouping, windowing, and buffering.
- *
+ * <p>
  * Read first:
- *
+ * <p>
  * https://projectreactor.io/docs/core/release/reference/#advanced-three-sorts-batching
  * https://projectreactor.io/docs/core/release/reference/#which.window
- *
+ * <p>
  * Useful documentation:
- *
+ * <p>
  * https://projectreactor.io/docs/core/release/reference/#which-operator
  * https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Mono.html
  * https://projectreactor.io/docs/core/release/api/reactor/core/publisher/Flux.html
@@ -28,16 +29,13 @@ public class c11_Batching extends BatchingBase {
      */
     @Test
     public void batch_writer() {
-        //todo do your changes here
         Flux<Void> dataStream = dataStream()
                 .buffer(10)
-                        .flatMap(elem->writeToDisk(elem));
-//        dataStream();
-//        writeToDisk(null);
+                .flatMap(elem -> writeToDisk(elem));
 
         //do not change the code below
         StepVerifier.create(dataStream)
-                    .verifyComplete();
+                .verifyComplete();
 
         Assertions.assertEquals(10, diskCounter.get());
     }
@@ -51,10 +49,10 @@ public class c11_Batching extends BatchingBase {
      */
     @Test
     public void command_gateway() {
-        //todo: implement your changes here
-        Flux<Void> processCommands = null;
-        inputCommandStream();
-        sendCommand(null);
+        Flux<Void> processCommands = inputCommandStream()
+                .groupBy(elem -> elem.getAggregateId())
+                .flatMap(e -> e
+                        .concatMap(c -> sendCommand(c)));
 
         //do not change the code below
         Duration duration = StepVerifier.create(processCommands)
@@ -71,11 +69,12 @@ public class c11_Batching extends BatchingBase {
     @Test
     public void sum_over_time() {
         Flux<Long> metrics = metrics()
-                //todo: implement your changes here
+                .window(Duration.ofSeconds(1))
+                .flatMap(w -> w.reduce(0L,(a, b) -> a + b))
                 .take(10);
 
         StepVerifier.create(metrics)
-                    .expectNext(45L, 165L, 255L, 396L, 465L, 627L, 675L, 858L, 885L, 1089L)
-                    .verifyComplete();
+                .expectNext(45L, 165L, 255L, 396L, 465L, 627L, 675L, 858L, 885L, 1089L)
+                .verifyComplete();
     }
 }

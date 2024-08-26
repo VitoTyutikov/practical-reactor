@@ -56,11 +56,14 @@ public class c13_Context extends ContextBase {
      */
     @Test
     public void execution_counter() {
-        Mono<Void> repeat = Mono.deferContextual(ctx -> {//TODO: why don't work contextWrite(ctx->ctx.put(Atomic, new Atomic())
+        AtomicInteger counter = new AtomicInteger();
+        Mono<Void> repeat = Mono.deferContextual(ctx -> {
                     ctx.get(AtomicInteger.class).incrementAndGet();
                     return openConnection();
                 })
-                .contextWrite(Context.of(AtomicInteger.class, new AtomicInteger()));
+//                .contextWrite(Context.of(AtomicInteger.class, new AtomicInteger()))
+                .contextWrite(ctx -> ctx.put(AtomicInteger.class, counter));
+        ;
         ;
 
         StepVerifier.create(repeat.repeat(4))

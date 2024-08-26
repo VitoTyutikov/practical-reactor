@@ -26,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * @author Stefan Dragisic
  */
-public class c13_Context extends ContextBase {//TODO: reread docs (or video/book)
+public class c13_Context extends ContextBase {
 
     /**
      * You are writing a message handler that is executed by a framework (client). Framework attaches a http correlation

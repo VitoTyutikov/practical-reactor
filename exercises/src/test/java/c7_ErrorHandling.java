@@ -125,7 +125,6 @@ public class c7_ErrorHandling extends ErrorHandlingBase {
                         .then(task.commit())
                         .onErrorResume(task::rollback)
                         .thenReturn(task));
-        //todo: do your changes here
         ;
 
         StepVerifier.create(taskFlux)
@@ -164,7 +163,6 @@ public class c7_ErrorHandling extends ErrorHandlingBase {
      */
     @Test
     public void resilience() {
-        //todo: change code as you need
         Flux<String> content = getFilesContent()
                 .flatMap(file -> file
                         .doOnError(System.out::println)

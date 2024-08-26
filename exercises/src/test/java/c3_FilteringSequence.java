@@ -28,7 +28,6 @@ public class c3_FilteringSequence extends FilteringSequenceBase {
     public void girls_are_made_of_sugar_and_spice() {
         Flux<String> shortListed = popular_girl_names_service()
                 .filter(name -> name.length() <= 4)
-                //todo: change this line only
                 ;
 
         StepVerifier.create(shortListed)
@@ -72,7 +71,6 @@ public class c3_FilteringSequence extends FilteringSequenceBase {
      */
     @Test
     public void watch_out_for_the_spiders() {
-        //todo: change code as you need
         Mono<String> firstResult = fragile_service().next();
 
         //don't change code below
@@ -88,7 +86,6 @@ public class c3_FilteringSequence extends FilteringSequenceBase {
     public void dont_take_more_then_you_need() {
         Flux<Integer> numbers = number_service()
                 .take(100)
-                //todo: change this line only
                 ;
 
         StepVerifier.create(numbers)
@@ -103,7 +100,6 @@ public class c3_FilteringSequence extends FilteringSequenceBase {
     public void not_a_binary_search() {
         Flux<Integer> numbers = number_service()
                 .takeLast(100)
-                //todo: change this line only
                 ;
 
         StepVerifier.create(numbers)
@@ -120,7 +116,6 @@ public class c3_FilteringSequence extends FilteringSequenceBase {
         Flux<Integer> numbers = number_service()
                 .skip(100)
                 .take(100)
-                //todo: do your changes here
                 ;
 
         StepVerifier.create(numbers)

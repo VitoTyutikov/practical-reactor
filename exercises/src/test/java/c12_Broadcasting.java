@@ -24,7 +24,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
  *
  * @author Stefan Dragisic
  */
-public class c12_Broadcasting extends BroadcastingBase {//TODO: don't understand difference between methods (share, publish().refCount(2)); and some other
+public class c12_Broadcasting extends BroadcastingBase {
 
     /**
      * Split incoming message stream into two streams, one contain user that sent message and second that contains

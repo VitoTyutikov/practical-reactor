@@ -43,15 +43,14 @@ public class c9_ExecutionControl extends ExecutionControlBase {
      * You are working on smartphone app and this part of code should show user his notifications. Since there could be
      * multiple notifications, for better UX you want to slow down appearance between notifications by 1 second.
      * Pay attention to threading, compare what code prints out before and after solution. Explain why?
+     *  - Because delayElements default uses the Schedulers.parallel()
      */
     @Test
-    public void slow_down_there_buckaroo() {//TODO: почему каждый элемент выводится на разных потоках?
+    public void slow_down_there_buckaroo() {
         long threadId = Thread.currentThread().getId();
         Flux<String> notifications = readNotifications()
                 .delayElements(Duration.ofSeconds(1))
-
                 .doOnEach(e -> System.out.println(Thread.currentThread().getId() + ": " + e))
-
                 .doOnNext(System.out::println);
 
         StepVerifier.create(notifications
@@ -99,7 +98,7 @@ public class c9_ExecutionControl extends ExecutionControlBase {
      * - What is their difference?
      */
     @Test
-    public void non_blocking() {//TODO: прочитать еще раз и ответить на вопросы
+    public void non_blocking() {
         Mono<Void> task = Mono.fromRunnable(() -> {
                     Thread currentThread = Thread.currentThread();
                     assert NonBlocking.class.isAssignableFrom(Thread.currentThread().getClass());
@@ -118,7 +117,7 @@ public class c9_ExecutionControl extends ExecutionControlBase {
      * - What BlockHound for?
      */
     @Test
-    public void blocking() {//TODO: как и предыдущее
+    public void blocking() {
         BlockHound.install(); //don't change this line
 
         Mono<Void> task = Mono.fromRunnable(ExecutionControlBase::blockingCall)
@@ -174,7 +173,7 @@ public class c9_ExecutionControl extends ExecutionControlBase {
      */
     @Test
     public void event_processor() {
-        //todo: feel free to change code as you need
+
         Scheduler scheduler = Schedulers.parallel();
         Flux<String> eventStream = eventProcessor()
                 .parallel()

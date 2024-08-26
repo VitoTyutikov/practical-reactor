@@ -42,7 +42,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
     public void behold_flatmap() {
         Hooks.enableContextLossTracking(); //used for testing - detects if you are cheating!
 
-        //todo: feel free to change code as you need
+
         Mono<String> currentUserEmail = getCurrentUser().flatMap(user -> getUserEmail(user));
 
 
@@ -61,7 +61,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void task_executor() {
-        //todo: feel free to change code as you need
+
         Flux<Void> tasks = taskExecutor()
                 .flatMap(Function.identity());
 
@@ -81,7 +81,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void streaming_service() {
-        //todo: feel free to change code as you need
+
         Flux<Message> messageFlux = streamingService()
                 .flatMapMany(Function.identity());
 
@@ -100,7 +100,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void i_am_rubber_you_are_glue() {
-        //todo: feel free to change code as you need
+
         Flux<Integer> numbers = numberService1().concatWith(numberService2());
 //        Flux<Integer> numbers = numberService1().mergeWith(numberService2());
 //        Flux<Integer> numbers = Flux.concat(numberService1(), numberService2());
@@ -126,7 +126,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void task_executor_again() {
-        //todo: feel free to change code as you need
+
         Flux<Void> tasks = taskExecutor()
                 .concatMap(Function.identity());
         ;
@@ -145,7 +145,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void need_for_speed() {
-        //todo: feel free to change code as you need
+
         Flux<String> stonks = Flux.firstWithValue(getStocksGrpc(), getStocksRest());
 
 
@@ -162,7 +162,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void plan_b() {
-        //todo: feel free to change code as you need
+
         Flux<String> stonks = getStocksLocalCache().switchIfEmpty(getStocksRest());
 
         //don't change below this line
@@ -179,7 +179,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void mail_box_switcher() {
-        //todo: feel free to change code as you need
+
         Flux<Message> myMail = mailBoxPrimary().switchOnFirst(((signal, flux) -> {
             if (signal.get().metaData.contains("spam")) {
                 return mailBoxSecondary();
@@ -207,10 +207,9 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void instant_search() {
-        //todo: feel free to change code as you need
+
         Flux<String> suggestions = userSearchInput()
                 .switchMap(m -> autoComplete(m));
-        //todo: use one operator only
 
 
         //don't change below this line
@@ -227,8 +226,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void prettify() {
-        //todo: feel free to change code as you need
-        //todo: use when,and,then...
+
         Mono<Boolean> successful = when(openFile())
                 .then(writeToFile("0x3522285912341"))
                 .then(closeFile())
@@ -250,7 +248,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void one_to_n() {
-        //todo: feel free to change code as you need
+
 
         Flux<String> fileLines = when(openFile())
                 .thenMany(readFile());
@@ -266,7 +264,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void acid_durability() {
-        //todo: feel free to change code as you need
+
         Flux<String> committedTasksIds = tasksToExecute()
                 .concatMap(task ->
                         task.flatMap(taskId -> commitTask(taskId)
@@ -290,7 +288,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void major_merger() {
-        //todo: feel free to change code as you need
+
         Flux<String> microsoftBlizzardCorp =
                 microsoftTitles().mergeWith(blizzardTitles());
 //        blizzardTitles();
@@ -316,7 +314,7 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      */
     @Test
     public void car_factory() {
-        //todo: feel free to change code as you need
+
         Flux<Car> producedCars = carChassisProducer().zipWith(carEngineProducer(), Car::new);
 //        carChassisProducer();
 //        carEngineProducer();
@@ -338,9 +336,8 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
     //only read from sourceRef
     AtomicReference<String> sourceRef = new AtomicReference<>("X");
 
-    //todo: implement this method based on instructions
     public Mono<String> chooseSource() {
-        return Mono.defer(() -> { //TODO: нужен ли defer
+        return Mono.defer(() -> {
                     if (sourceRef.get().equals("A")) {
                         return sourceA();
                     } else if (sourceRef.get().equals("B")) {
@@ -380,12 +377,12 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
      * This may look easy...
      */
     @Test
-    public void cleanup() {//TODO: не до конца понял что с параметрами
+    public void cleanup() {
         BlockHound.install(); //don't change this line, blocking = cheating!
 
         Flux<String> stream = Flux.usingWhen(
                 StreamingConnection.startStreaming(),
-                n -> n,
+                e -> e,
                 close -> StreamingConnection.closeConnection());
 
 

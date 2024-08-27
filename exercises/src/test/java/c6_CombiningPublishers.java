@@ -102,7 +102,6 @@ public class c6_CombiningPublishers extends CombiningPublishersBase {
     public void i_am_rubber_you_are_glue() {
 
         Flux<Integer> numbers = numberService1().concatWith(numberService2());
-//        Flux<Integer> numbers = numberService1().mergeWith(numberService2());
 //        Flux<Integer> numbers = Flux.concat(numberService1(), numberService2());
 
         //don't change below this line
